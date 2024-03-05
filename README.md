@@ -1,1 +1,1 @@
-# social_network_system_design
+# Проектирование социальной сети для курса по [System Design](https://github.com/Balun-courses/system_design) 
