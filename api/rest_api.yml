@@ -1,0 +1,134 @@
+openapi: 3.0.0
+info:
+  title: Travel API
+  description: API for publishing travel posts, rating and commenting on other posts, subscribing to other travelers, searching popular travel destinations, messaging other travelers, and viewing other travelers' feeds.
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /posts:
+    post:
+      summary: Publish a travel post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                photos:
+                  type: array
+                  items:
+                    type: string
+                  description: List of photo URLs
+                description:
+                  type: string
+                  description: Post description
+                location:
+                  type: string
+                  description: Location of the travel post
+      responses:
+        '201':
+          description: Created
+  /posts/{postId}/comments:
+    post:
+      summary: Add a comment to a travel post
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+                  description: Comment on the travel post
+      responses:
+        '201':
+          description: Created
+  /posts/{postId}/rating:
+    post:
+      summary: Rate a travel post
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: integer
+                  description: Rating for the travel post
+      responses:
+        '201':
+          description: Created
+  /travelers/{travelerId}/subscribe:
+    post:
+      summary: Subscribe to a traveler
+      parameters:
+        - name: travelerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created
+  /travelers/{travelerId}/message:
+    post:
+      summary: Send a message to a traveler
+      parameters:
+        - name: travelerId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: Message to the traveler
+      responses:
+        '201':
+          description: Created
+  /travelers/feed:
+    get:
+      summary: Get the feed of other travelers
+      responses:
+        '200':
+          description: OK
+  /destinations/popular:
+    get:
+      summary: Get popular travel destinations
+      responses:
+        '200':
+          description: OK
+  /destinations/{destinationId}/top-posts:
+    get:
+      summary: Get top posts for a travel destination
+      parameters:
+        - name: destinationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
